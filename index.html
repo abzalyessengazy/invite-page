@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
- <h1> Ескендiр  & Томирис <br> Тұсаукесер</h1>
+
 
 
   <!-- Fonts -->
@@ -117,22 +117,11 @@
     }
 
 
-    /* card + ocean */
-    .card {
-      position:relative; z-index:9; margin:12px auto; width:100%;
-      border-radius:18px; overflow:hidden;
-      background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.94));
-      box-shadow:0 18px 50px rgba(2,18,28,0.18);
-      padding:12px; box-sizing:border-box;
-      animation:fadeInUp .7s .15s ease both;
-    }
+  
     .ocean {
-      position:relative; width:100%; height:420px; max-height:68vh;
-      border-radius:12px; overflow:hidden;
-      background:linear-gradient(180deg,#9fe8ff 0%, #4fb3d8 40%, #00507a 100%);
-      box-shadow:inset 0 6px 24px rgba(0,0,0,0.08);
-    }
-    .ocean .frame{ position:absolute; inset:14px; border:8px solid rgba(255,255,255,0.28); border-radius:10px; pointer-events:none; }
+  background: rgba(0,0,0,0.3); /* transparent overlay instead of full gradient */
+}
+
 
     .fish-zone{ position:absolute; inset:32px 18px 18px; perspective:900px; overflow:visible; }
 
@@ -167,6 +156,27 @@
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
+.fish-above-form img {
+  animation: restartGif 6s linear infinite; /* duration = gif length */
+}
+
+@keyframes restartGif {
+  0% { visibility: visible; }
+  99.9% { visibility: visible; }
+  100% { visibility: hidden; } /* forces reload */
+}
+
+.card {
+  position:relative; z-index:9; margin:12px auto; width:100%;
+  border-radius:18px; overflow:hidden;
+  background: url('background3.jpg') no-repeat center center;
+  background-size: cover;
+  box-shadow:0 18px 50px rgba(2,18,28,0.18);
+  padding:12px; box-sizing:border-box;
+  animation:fadeInUp .7s .15s ease both;
+}
+
 
 
     /* RSVP block (updated look) */
@@ -258,13 +268,16 @@
 <body>
 
   <!-- full background placeholder -->
-  <div class="page-bg" style="background-image:url('full-background.jpg');"></div>
+  <div class="page-bg" style="background-image:url('background3.jpg');"></div>
 
   <div class="wrap">
     <!-- header -->
     <header class="top" role="banner">
       <div class="twins-gif" aria-hidden="true"><img src="twins.gif" alt="twins"></div>
-      <h1>Томирис & Ескендiр – Тұсаукесер</h1>
+       <h1 style="text-align:center;">
+  Ескендiр & Томирис <br> Тұсаукесер
+</h1>
+
       <h2 style="display:none">(optional subtitle)</h2>
     </header>
 
@@ -276,14 +289,11 @@
       <div><span id="seconds">00</span>секунд</div>
     </div>
 
-   <!-- main card -->
+<!-- main card -->
 <div class="card">
   <div class="ocean" aria-hidden="true">
     <div class="frame"></div>
 
-    <!-- floating text -->
-    <div class="floating-text">Тойдың тақырыбы - мұхит әлемi</div>
-    
 
     <!-- fish zone (3 fish) -->
     <div class="fish-zone" id="fishZone">
@@ -538,7 +548,15 @@
       document.addEventListener('click', resumeOnFirst, {once:true});
     })();
   </script>
+  <script>
+  const gif = document.querySelector('.fish-above-form img');
+  setInterval(() => {
+    gif.src = gif.src.split('?')[0] + '?t=' + new Date().getTime();
+  }, 4000); // restart every 6s (adjust to your gif length)
+</script>
+
 </body>
 </html>
+
 
 
