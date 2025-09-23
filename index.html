@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Томирис & Ескендiр – Тұсаукесер</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #fff;
+      margin: 0;
+      background: linear-gradient(to bottom, #003366, #001a33);
+    }
+
+    /* === Header / Main Info === */
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      margin: 2rem auto 1rem;
+      max-width: 800px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    header h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3.2rem;
+      margin-bottom: 0.3rem;
+      color: #ffdd99;
+    }
+
+    header h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #66e0ff;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #e6f7ff;
+    }
+
+    /* === Countdown === */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      font-size: 1.3rem;
+      margin: 2rem auto;
+      color: #fff;
+      background: rgba(0, 50, 100, 0.6);
+      padding: 1rem 2.5rem;
+      border-radius: 25px;
+      max-width: 650px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .countdown span {
+      display: block;
+      font-weight: bold;
+      font-size: 2.2rem;
+      color: #00ffff;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+    }
+
+    /* === Ocean Zone === */
+    .ocean {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      background: linear-gradient(to top, #002244, #004466);
+      overflow: hidden;
+      border-radius: 30px;
+      margin: 2rem auto;
+      max-width: 900px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Fish */
+    .fish-zone {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    .fish {
+      position: absolute;
+      width: 180px;
+      height: auto;
+      pointer-events: none;
+      opacity: 0.95;
+      animation: wiggle 2s infinite ease-in-out;
+    }
+    #fish2 {
+        left: 10%; /* left side */
+    }
+
+    #fish3 {
+        right: 10%; /* right side */
+    }
+    #fish4 {
+        position: absolute;
+        bottom: 10%;   /* distance from bottom */
+        right: 10%;    /* distance from right */
+        width: 200px;  /* adjust fish size */
+    }
+
+    @keyframes wiggle {
+      0%   { transform: rotateZ(0deg); }
+      25%  { transform: rotateZ(1deg); }
+      50%  { transform: rotateZ(0deg); }
+      75%  { transform: rotateZ(-1deg); }
+      100% { transform: rotateZ(0deg); }
+    }
+
+    /* Bubbles */
+    .bubble {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: rise 15s infinite ease-in;
+    }
+
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-800px) scale(0.5); opacity: 0; }
+    }
+
+    /* RSVP */
+    .rsvp {
+      background: rgba(255,255,255,0.08);
+      padding: 25px;
+      margin: 30px auto;
+      border-radius: 20px;
+      max-width: 700px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .rsvp h3 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: #ffdd99;
+    }
+
+    .rsvp label {
+      display: block;
+      margin: 12px 0;
+      font-size: 1.1rem;
+    }
+
+    .rsvp button {
+      background: #ffcc00;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .rsvp button:hover {
+      background: #ffaa00;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Info -->
+  <header>
+    <h1>Томирис & Ескендир</h1>
+    <h2>1 жас & Тұсаукесер</h2>
+    <p>15 қараша 2025, сағат 13:00<br>La Bella мейрамханасы</p>
+  </header>
+
+  <!-- Countdown -->
+  <div class="countdown">
+    <div><span id="days">00</span>күн</div>
+    <div><span id="hours">00</span>сағат</div>
+    <div><span id="minutes">00</span>минут</div>
+    <div><span id="seconds">00</span>секунд</div>
+  </div>
+
+  <!-- Ocean Block -->
+  <div class="ocean">
+    <div class="fish-zone">
+      <img src="fish4.gif" class="fish" id="fish2" />
+      <img src="fish5.gif" class="fish" id="fish3" />
+      <img src="fish6.gif" class="fish" id="fish4" />
+    </div>
+
+    <!-- Bubbles -->
+    <div class="bubble" style="left:20%; animation-duration: 7s;"></div>
+    <div class="bubble" style="left:50%; animation-duration: 10s;"></div>
+    <div class="bubble" style="left:80%; animation-duration: 12s;"></div>
+    <div class="bubble" style="left:30%; animation-duration: 9s;"></div>
+    <div class="bubble" style="left:70%; animation-duration: 11s;"></div>
+  </div>
+
+
+   <section class="rsvp">
+  <h3>Қатысуыңызды растаңыз:</h3>
+  <form id="rsvpForm"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSdQ1q-iIZ0JQlUizemLDUPp445q3t3ZdjcKglORGLi-9Cz09w/formResponse"
+        method="POST"
+        target="hidden_iframe"
+        onsubmit="alert('Рақмет! Жауабыңыз қабылданды.'); this.reset();">
+      
+      <!-- Жаңа сұрақ -->
+      <label>
+        Атыңыз:<br>
+        <input type="text" name="entry.1321490033" required style="width: 300px; height: 35px; font-size: 16px; padding: 5px;">
+        </label><br><br>
+
+
+      <label>
+        <input type="radio" name="entry.271098179" value="Өзім келемін" required> Өзім келемін
+      </label><br>
+      <label>
+        <input type="radio" name="entry.271098179" value="Жолдасыммен келемін"> Жолдасыммен келемін
+      </label><br>
+      <label>
+        <input type="radio" name="entry.271098179" value="Келе алмаймын"> Келе алмаймын
+      </label><br><br>
+      
+      <button type="submit">Жіберу</button>
+  </form>
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
+</section>
+
+
+    <script>
+    function submitted() {
+        alert("Рақмет! Жауабыңыз қабылданды.");
+    }
+    </script>
+
+
+
+  <script>
+    // === Countdown ===
+    const targetDate = new Date("Nov 15, 2025 13:00:00").getTime();
+    const timer = setInterval(function() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      if (distance < 0) {
+        clearInterval(timer);
+        document.querySelector(".countdown").innerHTML = "Той басталды!";
+        return;
+      }
+      document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+      document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+    }, 1000);
+
+    // === Fish swimming logic ===
+    function swimFish(fish, container) {
+      const rect = container.getBoundingClientRect();
+      const x = Math.random() * (rect.width - 150);
+      const y = Math.random() * (rect.height - 150);
+      const speed = 4000 + Math.random() * 4000;
+      const flip = Math.random() > 0.5 ? 'scaleX(1)' : 'scaleX(-1)';
+
+      fish.style.transition = `transform ${speed}ms ease-in-out`;
+      fish.style.transform = `translate(${x}px, ${y}px) ${flip}`;
+
+      setTimeout(() => swimFish(fish, container), speed);
+    }
+
+    const fishZone = document.querySelector(".fish-zone");
+    swimFish(document.getElementById("fish1"), fishZone);
+    swimFish(document.getElementById("fish2"), fishZone);
+  </script>
+
+</body>
+</html>
