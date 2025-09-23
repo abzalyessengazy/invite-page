@@ -1,304 +1,541 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Томирис & Ескендiр – Тұсаукесер</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Томирис & Ескендир — Тұсаукесер</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:ital@0;1&family=Rubik:wght@300;500;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      font-size: 18px;
-      line-height: 1.6;
-      color: #fff;
-      margin: 0;
-      background: linear-gradient(to bottom, #003366, #001a33);
+    :root{
+      --accent:#00c2d1;
+      --accent-2:#ffd07a;
+      --accent-3:#ff6b8a;
+      --max-width: 880px;
     }
 
-    /* === Header / Main Info === */
-    header {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      margin: 2rem auto 1rem;
-      max-width: 800px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    /* base */
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:"Rubik",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background: linear-gradient(180deg,#bfefff 0%, #3aa0d7 45%, #003a58 100%);
+      color:#073043;
+      display:flex;
+      justify-content:center;
+      padding:18px 12px;
+      box-sizing:border-box;
     }
+    .wrap{ width:100%; max-width:var(--max-width); margin:0 auto; position:relative; z-index:2; }
 
-    header h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 3.2rem;
-      margin-bottom: 0.3rem;
-      color: #ffdd99;
+    /* page background placeholder */
+    .page-bg { position: fixed; inset:0; z-index:0; background-size:cover; background-position:center; opacity:.15; pointer-events:none; }
+
+    /* play button (animated) */
+    .play-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(180deg,#ff5b7a,#ff3a63);
+      color: white;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      animation: pulse 1.6s infinite;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      user-select: none;
+      z-index:9999;
+      border: 3px solid rgba(255,255,255,0.08);
     }
+    .play-button[aria-pressed="true"]{ background: linear-gradient(180deg,#00c2d1,#00a3b2); }
+    @keyframes pulse { 0%{ transform: scale(1);} 50%{ transform: scale(1.12);} 100%{ transform: scale(1);} }
 
-    header h2 {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #66e0ff;
+    /* header */
+    header.top {
+      position:relative; z-index:10;
+      display:flex; flex-direction:column; align-items:center;
+      gap:12px; padding:16px; margin-bottom:12px;
+      border-radius:18px;
+      background:linear-gradient(135deg, #fff9f3 0%, #fff3d8 100%); /* warmer */
+      box-shadow:0 8px 22px rgba(3,16,26,0.18);
+      animation:fadeInDown .7s ease both;
     }
+    .twins-gif{ width:120px; height:120px; border-radius:999px; overflow:hidden; border:4px solid rgba(255,255,255,0.18); box-shadow:0 6px 20px rgba(0,0,0,0.18); }
+    .twins-gif img{ width:100%; height:100%; object-fit:cover; display:block; }
 
-    header p {
-      font-size: 1.2rem;
-      color: #e6f7ff;
+    header h1{
+      margin:0;
+      font-family:"Pacifico",cursive;
+      font-size:32px;
+      color:var(--accent-3);
+      /* stronger shadow to be readable on any bg */
+      text-shadow: 0 6px 18px rgba(0,0,0,0.65), 0 2px 6px rgba(255, 160, 180, 0.08);
     }
+    header h2{ margin:0; font-family:"Playfair Display",serif; color:var(--accent-2); font-size:16px; letter-spacing:.6px; margin-top:4px; }
 
-    /* === Countdown === */
+    /* countdown (from your snippet) */
     .countdown {
       display: flex;
       justify-content: center;
       gap: 25px;
-      font-size: 1.3rem;
-      margin: 2rem auto;
-      color: #fff;
-      background: rgba(0, 50, 100, 0.6);
-      padding: 1rem 2.5rem;
-      border-radius: 25px;
-      max-width: 650px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      margin: 1.5rem auto;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 0.9rem 1.25rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+      max-width: 640px;
+      z-index: 11;
     }
-
+    .countdown div { font-size: 1.05rem; font-weight:500; color:#012c33; text-align:center; }
     .countdown span {
       display: block;
+      font-size: 2rem;
       font-weight: bold;
-      font-size: 2.2rem;
       color: #00ffff;
-      margin-bottom: 0.2rem;
-      text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+      text-shadow: 0 0 8px rgba(0,255,255,0.6);
     }
 
-    /* === Ocean Zone === */
+    .fish-above-form {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* vertical align if needed */
+    width: 100%;
+    margin: 0 auto;      /* makes sure it stays centered in the parent */
+    text-align: center;
+    }
+    .fish-above-form img {
+    display: block;   /* removes inline gaps */
+    margin: 0 auto;   /* ensures perfect centering */
+    }
+
+
+    /* card + ocean */
+    .card {
+      position:relative; z-index:9; margin:12px auto; width:100%;
+      border-radius:18px; overflow:hidden;
+      background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.94));
+      box-shadow:0 18px 50px rgba(2,18,28,0.18);
+      padding:12px; box-sizing:border-box;
+      animation:fadeInUp .7s .15s ease both;
+    }
     .ocean {
-      position: relative;
-      width: 100%;
-      height: 500px;
-      background: linear-gradient(to top, #002244, #004466);
-      overflow: hidden;
-      border-radius: 30px;
-      margin: 2rem auto;
-      max-width: 900px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      position:relative; width:100%; height:420px; max-height:68vh;
+      border-radius:12px; overflow:hidden;
+      background:linear-gradient(180deg,#9fe8ff 0%, #4fb3d8 40%, #00507a 100%);
+      box-shadow:inset 0 6px 24px rgba(0,0,0,0.08);
     }
+    .ocean .frame{ position:absolute; inset:14px; border:8px solid rgba(255,255,255,0.28); border-radius:10px; pointer-events:none; }
 
-    /* Fish */
-    .fish-zone {
-      position: relative;
-      height: 100%;
-      overflow: hidden;
-      z-index: 5;
-    }
+    .fish-zone{ position:absolute; inset:32px 18px 18px; perspective:900px; overflow:visible; }
 
-    .fish {
-      position: absolute;
-      width: 180px;
-      height: auto;
-      pointer-events: none;
-      opacity: 0.95;
-      animation: wiggle 2s infinite ease-in-out;
-    }
-    #fish2 {
-        left: 10%; /* left side */
-    }
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-    #fish3 {
-        right: 10%; /* right side */
-    }
-    #fish4 {
-        position: absolute;
-        bottom: 10%;   /* distance from bottom */
-        right: 10%;    /* distance from right */
-        width: 200px;  /* adjust fish size */
-    }
+.floating-text {
+  position: absolute;
+  font-size: 2rem;
+  font-family: 'Pacifico', cursive;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00d4ff, #0099ff, #ff66cc, #ffcc00);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(0, 200, 255, 0.7);
+  animation: floatAround 12s linear infinite, shimmer 4s ease-in-out infinite;
+  white-space: nowrap;
+  pointer-events: none; /* not clickable */
+}
 
-    @keyframes wiggle {
-      0%   { transform: rotateZ(0deg); }
-      25%  { transform: rotateZ(1deg); }
-      50%  { transform: rotateZ(0deg); }
-      75%  { transform: rotateZ(-1deg); }
-      100% { transform: rotateZ(0deg); }
-    }
+@keyframes floatAround {
+  0%   { top: 20%; left: 10%; transform: rotate(0deg); }
+  25%  { top: 40%; left: 70%; transform: rotate(5deg); }
+  50%  { top: 60%; left: 30%; transform: rotate(-5deg); }
+  75%  { top: 35%; left: 80%; transform: rotate(3deg); }
+  100% { top: 20%; left: 10%; transform: rotate(0deg); }
+}
 
-    /* Bubbles */
-    .bubble {
-      position: absolute;
-      bottom: -50px;
-      width: 20px;
-      height: 20px;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 50%;
-      animation: rise 15s infinite ease-in;
-    }
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    @keyframes rise {
-      0%   { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-800px) scale(0.5); opacity: 0; }
-    }
 
-    /* RSVP */
+    /* RSVP block (updated look) */
     .rsvp {
-      background: rgba(255,255,255,0.08);
-      padding: 25px;
-      margin: 30px auto;
-      border-radius: 20px;
-      max-width: 700px;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      margin: 18px 10px 30px;
+      padding: 18px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #fffefb 0%, #fff3e0 100%);
+      border: 2px solid rgba(255, 208, 122, 0.55);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+      position: relative;
+      overflow: hidden;
     }
-
     .rsvp h3 {
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-      color: #ffdd99;
+      margin: 0 0 10px;
+      color: #0d3c55;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      font-family: "Pacifico", cursive;
+      letter-spacing: 0.5px;
+    }
+    .rsvp p.body-text {
+      margin: 8px 0 14px;
+      font-size: 16px;
+      color: #5a3e1b;
+      text-align: center;
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 18px;
     }
 
-    .rsvp label {
-      display: block;
-      margin: 12px 0;
-      font-size: 1.1rem;
+    /* Google-form-like inputs */
+    .rsvp form{ display:flex; flex-direction:column; gap:10px; align-items:center; }
+    .rsvp input, .rsvp select{ width:92%; max-width:420px; padding:12px; border-radius:10px; border:1px solid rgba(6,25,30,0.06); font-size:15px; box-sizing:border-box; }
+    .radio-row{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; font-size:14px; color:#163743; }
+    .rsvp button{ background:linear-gradient(90deg,var(--accent-3),var(--accent)); color:#fff; border:none; padding:11px 18px; font-weight:600; border-radius:12px; cursor:pointer; box-shadow:0 8px 18px rgba(0,0,0,0.12); }
+    .rsvp button:active{ transform:translateY(1px); box-shadow:0 6px 12px rgba(0,0,0,0.08); }
+
+    /* map preview */
+    .map-preview{
+      display:flex; gap:10px; align-items:center; justify-content:center; margin:12px auto 6px;
+    }
+    .map-preview a{
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none;
+      color:#01262a;
+      background:#e8f9fb;
+      padding:8px 12px;
+      border-radius:10px;
+      border:1px solid rgba(1,1,1,0.04);
+      box-shadow: 0 6px 18px rgba(2,34,36,0.06);
+      font-size:14px;
     }
 
-    .rsvp button {
-      background: #ffcc00;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: all 0.3s ease;
+    /* fish + bubbles */
+    .fish { position:absolute; width:140px; will-change:transform,opacity; transform-style:preserve-3d; pointer-events:none; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.12)); z-index:5; }
+    @keyframes swim-forward {
+      0%   { transform:translateX(110%) translateY(40px) translateZ(-220px) scale(.55) rotateZ(-4deg) scaleX(-1); opacity:.6; }
+      40%  { transform:translateX(50%) translateY(10px) translateZ(80px) scale(1.05) rotateZ(0deg) scaleX(-1); opacity:1; }
+      80%  { transform:translateX(-20%) translateY(30px) translateZ(-120px) scale(.75) rotateZ(3deg) scaleX(-1); opacity:.85; }
+      100% { transform:translateX(-120%) translateY(24px) translateZ(-240px) scale(.5) rotateZ(0deg) scaleX(-1); opacity:.6; }
+    }
+    @keyframes swim-back {
+      0%   { transform:translateX(-120%) translateY(24px) translateZ(-240px) scale(.5) rotateZ(0deg) scaleX(1); opacity:.6; }
+      40%  { transform:translateX(-20%) translateY(30px) translateZ(-120px) scale(.75) rotateZ(3deg) scaleX(1); opacity:.85; }
+      80%  { transform:translateX(50%) translateY(10px) translateZ(80px) scale(1.05) rotateZ(0deg) scaleX(1); opacity:1; }
+      100% { transform:translateX(110%) translateY(40px) translateZ(-220px) scale(.55) rotateZ(-4deg) scaleX(1); opacity:.6; }
     }
 
-    .rsvp button:hover {
-      background: #ffaa00;
-    }
+    .bubble{ position:absolute; bottom:-60px; width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,0.85); opacity:.8; animation:rise 11s linear infinite; filter:blur(.2px); z-index:3; }
+    @keyframes rise{ 0%{transform:translateY(0) scale(.9); opacity:.9} 100%{transform:translateY(-780px) scale(.4); opacity:0} }
+
+    /* modal */
+    .modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); z-index:99999; opacity:0; pointer-events:none; transition:opacity .25s; }
+    .modal.show{ opacity:1; pointer-events:auto; }
+    .modal-card{ width:90%; max-width:420px; background:white; border-radius:14px; padding:14px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.28); transform:translateY(20px); transition:transform .28s; }
+    .modal.show .modal-card{ transform:translateY(0); }
+    .confetti span{ position:absolute; width:8px; height:12px; border-radius:2px; animation:confetti-fall 900ms linear forwards; opacity:0; }
+    @keyframes confetti-fall{ 0%{transform:translateY(-20px) rotate(0deg); opacity:1;} 100%{transform:translateY(120px) rotate(720deg); opacity:0;} }
+
+    /* tiny animations & responsive */
+    @keyframes fadeInDown{ from{opacity:0; transform:translateY(-10px)} to{opacity:1; transform:none} }
+    @keyframes fadeInUp{ from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+    @media (min-width:720px){ header h1{font-size:40px;} .ocean{height:520px;} .fish{width:170px;} .countdown{gap:30px;} }
   </style>
 </head>
 <body>
 
-  <!-- Header Info -->
-  <header>
-    <h1>Томирис & Ескендир</h1>
-    <h2>1 жас & Тұсаукесер</h2>
-    <p>15 қараша 2025, сағат 13:00<br>La Bella мейрамханасы</p>
-  </header>
+  <!-- full background placeholder -->
+  <div class="page-bg" style="background-image:url('full-background.jpg');"></div>
 
-  <!-- Countdown -->
-  <div class="countdown">
-    <div><span id="days">00</span>күн</div>
-    <div><span id="hours">00</span>сағат</div>
-    <div><span id="minutes">00</span>минут</div>
-    <div><span id="seconds">00</span>секунд</div>
-  </div>
+  <div class="wrap">
+    <!-- header -->
+    <header class="top" role="banner">
+      <div class="twins-gif" aria-hidden="true"><img src="twins.gif" alt="twins"></div>
+      <h1>Томирис & Ескендiр – Тұсаукесер</h1>
+      <h2 style="display:none">(optional subtitle)</h2>
+    </header>
 
-  <!-- Ocean Block -->
-  <div class="ocean">
-    <div class="fish-zone">
-      <img src="fish4.gif" class="fish" id="fish2" />
-      <img src="fish5.gif" class="fish" id="fish3" />
-      <img src="fish6.gif" class="fish" id="fish4" />
+    <!-- countdown -->
+    <div class="countdown" aria-hidden="false">
+      <div><span id="days">00</span>күн</div>
+      <div><span id="hours">00</span>сағат</div>
+      <div><span id="minutes">00</span>минут</div>
+      <div><span id="seconds">00</span>секунд</div>
     </div>
 
-    <!-- Bubbles -->
-    <div class="bubble" style="left:20%; animation-duration: 7s;"></div>
-    <div class="bubble" style="left:50%; animation-duration: 10s;"></div>
-    <div class="bubble" style="left:80%; animation-duration: 12s;"></div>
-    <div class="bubble" style="left:30%; animation-duration: 9s;"></div>
-    <div class="bubble" style="left:70%; animation-duration: 11s;"></div>
+   <!-- main card -->
+<div class="card">
+  <div class="ocean" aria-hidden="true">
+    <div class="frame"></div>
+
+    <!-- floating text -->
+    <div class="floating-text">Тойдың тақырыбы - мұхит әлемi</div>
+    
+
+    <!-- fish zone (3 fish) -->
+    <div class="fish-zone" id="fishZone">
+      <img src="fish5.gif" class="fish" alt="fish1">
+      <img src="fish6.gif" class="fish" alt="fish2">
+      <img src="fish4.gif" class="fish" alt="fish3">
+    </div>
+
+    <!-- bubbles -->
+    <div class="bubble" style="left:8%; animation-duration:6.8s;"></div>
+    <div class="bubble" style="left:22%; animation-duration:9.2s;"></div>
+    <div class="bubble" style="left:40%; animation-duration:11.6s;"></div>
+    <div class="bubble" style="left:58%; animation-duration:8.8s;"></div>
+    <div class="bubble" style="left:76%; animation-duration:12.4s;"></div>
+    <div class="bubble" style="left:88%; animation-duration:10.5s;"></div>
+  </div>
+</div>
+
+
+      <!-- RSVP + map + form -->
+      <section class="rsvp" aria-labelledby="rsvpTitle">
+        <h3 id="rsvpTitle">Құрметті ағайын-туыс & достар!</h3>
+
+        <p class="body-text">
+          Сіздерді ұлымыз Ескендір мен қызымыз Томиристің тұсау кесер тойына шақырамыз.<br>
+          <strong>Өтетін күні:</strong> 15.11.2025 • <strong>Уақыты:</strong> 13:00<br>
+          <strong>Мекен-жайы:</strong> La Bella Hall, Atyrau<br>
+          Той иелері: Абзал &amp; Айнур
+        </p>
+
+        <!-- MAP preview (click opens 2GIS) -->
+        <div class="map-preview" aria-hidden="false">
+          <a href="https://2gis.kz/atyrau/geo/70000001082661281" target="_blank" rel="noopener noreferrer">
+            <!-- small inline SVG pin + label -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="display:block">
+              <path d="M12 2C8.686 2 6 4.686 6 8c0 5.25 6 12 6 12s6-6.75 6-12c0-3.314-2.686-6-6-6z" fill="#00c2d1"/>
+              <circle cx="12" cy="8" r="2" fill="#fff"/>
+            </svg>
+            Мекен-жайы: La Bella — 2GIS-та ашу
+          </a>
+        </div>
+
+        <!-- little fish above form (staring) -->
+        <div class="fish-above-form" aria-hidden="true"><img src="twinshug.gif" alt="fish staring"></div>
+
+        <!-- Google-form-like styled form (still posts to Google Forms) -->
+        <form id="rsvpForm"
+              action="https://docs.google.com/forms/d/e/1FAIpQLSdQ1q-iIZ0JQlUizemLDUPp445q3t3ZdjcKglORGLi-9Cz09w/formResponse"
+              method="POST" target="hidden_iframe" onsubmit="return handleSubmit(event);">
+
+          <input type="text" name="entry.1321490033" placeholder="Атыңыз" required>
+          <input type="tel" name="entry.1987654321" placeholder="Телефон (міндетті емес)">
+
+          <div class="radio-row" role="radiogroup" aria-label="Қатысу статусы">
+            <label><input type="radio" name="entry.271098179" value="Өзім келемін" required> Өзім келемін</label>
+            <label><input type="radio" name="entry.271098179" value="Жолдасыммен келемін"> Жолдасыммен келемін</label>
+            <label><input type="radio" name="entry.271098179" value="Келе алмаймын"> Келе алмаймын</label>
+          </div>
+
+          <button type="submit">Жіберу</button>
+        </form>
+
+        <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+        <!-- small audio control wrapper (hidden audio used; play via button) -->
+        <div class="audio-wrap" style="display:none;">
+          <!-- audio kept for playback but not visible; control via the floating button -->
+          <audio id="bg-music" loop preload="auto">
+            <source src="Tusau.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </section>
+    </div>
   </div>
 
+  <!-- success modal -->
+  <div class="modal" id="successModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="thanksTitle">
+      <div class="twin" style="width:140px;height:140px;margin:0 auto 10px;border-radius:12px;overflow:hidden;"><img src="twins.gif" alt="twins" style="width:100%;height:100%;object-fit:cover"></div>
+      <h3 id="thanksTitle">Рахмет көп!</h3>
+      <p>Жауабыңыз қабылданды. Тойымызда кутеміз.</p>
+      <div class="confetti" id="confetti" style="height:100px; position:relative; overflow:visible;"></div>
+      <div style="margin-top:12px;"><button onclick="closeModal()" style="padding:8px 14px;border-radius:10px;border:none;background:#00b3bf;color:#fff;font-weight:600;">Жабу</button></div>
+    </div>
+  </div>
 
-  <section class="rsvp">
-  <h3>Қатысуыңызды растаңыз:</h3>
-  <form id="rsvpForm"
-        action="https://docs.google.com/forms/d/e/1FAIpQLSdQ1q-iIZ0JQlUizemLDUPp445q3t3ZdjcKglORGLi-9Cz09w/formResponse"
-        method="POST"
-        target="hidden_iframe"
-        onsubmit="alert('Рақмет! Жауабыңыз қабылданды.'); this.reset();">
-      
-      <!-- Жаңа сұрақ -->
-      <label>
-        Атыңыз:<br>
-        <input type="text" name="entry.1321490033" required style="width: 300px; height: 35px; font-size: 16px; padding: 5px;">
-        </label><br><br>
-
-
-      <label>
-        <input type="radio" name="entry.271098179" value="Өзім келемін" required> Өзім келемін
-      </label><br>
-      <label>
-        <input type="radio" name="entry.271098179" value="Жолдасыммен келемін"> Жолдасыммен келемін
-      </label><br>
-      <label>
-        <input type="radio" name="entry.271098179" value="Келе алмаймын"> Келе алмаймын
-      </label><br><br>
-      
-      <button type="submit">Жіберу</button>
-  </form>
-  <iframe name="hidden_iframe" style="display:none;"></iframe>
-</section>
-
-
-    <script>
-    function submitted() {
-        alert("Рақмет! Жауабыңыз қабылданды.");
-    }
-    </script>
-
-
-
-
-    <script>
-    function submitted() {
-        alert("Рақмет! Жауабыңыз қабылданды.");
-    }
-    </script>
-
-
+  <!-- Floating Play/Pause Button -->
+  <div id="play-btn" class="play-button" role="button" aria-pressed="false" aria-label="Ойнату / Тоқтату">▶</div>
 
   <script>
-    // === Countdown ===
-    const targetDate = new Date("Nov 15, 2025 13:00:00").getTime();
-    const timer = setInterval(function() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-      if (distance < 0) {
-        clearInterval(timer);
-        document.querySelector(".countdown").innerHTML = "Той басталды!";
-        return;
+    /* ------------------ Countdown ------------------ */
+    (function(){
+      const targetDate = new Date("Nov 15, 2025 13:00:00").getTime();
+      const daysEl = document.getElementById('days');
+      const hoursEl = document.getElementById('hours');
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+
+      function updateCountdown(){
+        const now = Date.now();
+        const dist = targetDate - now;
+        if(dist <= 0){
+          document.querySelector('.countdown').innerHTML = '<div style="font-weight:700;color:#004b59">Той басталды!</div>';
+          clearInterval(timer);
+          return;
+        }
+        const d = Math.floor(dist / (1000*60*60*24));
+        const h = Math.floor((dist % (1000*60*60*24)) / (1000*60*60));
+        const m = Math.floor((dist % (1000*60*60)) / (1000*60));
+        const s = Math.floor((dist % (1000*60)) / 1000);
+        daysEl.textContent = String(d).padStart(2,'0');
+        hoursEl.textContent = String(h).padStart(2,'0');
+        minutesEl.textContent = String(m).padStart(2,'0');
+        secondsEl.textContent = String(s).padStart(2,'0');
       }
-      document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
-      document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
-    }, 1000);
+      updateCountdown();
+      const timer = setInterval(updateCountdown, 1000);
+    })();
 
-    // === Fish swimming logic ===
-    function swimFish(fish, container) {
-      const rect = container.getBoundingClientRect();
-      const x = Math.random() * (rect.width - 150);
-      const y = Math.random() * (rect.height - 150);
-      const speed = 4000 + Math.random() * 4000;
-      const flip = Math.random() > 0.5 ? 'scaleX(1)' : 'scaleX(-1)';
+    /* ------------------ Fish animation setup ------------------ */
+    (function(){
+      const fishEls = document.querySelectorAll('.fish');
+      // simple non-overlap improvement: ensure each fish initial top positions are separated
+      const usedTops = [];
+      fishEls.forEach((f, idx) => {
+        // pick a top that avoids very close values
+        let top;
+        let attempts = 0;
+        do {
+          top = Math.floor(Math.random() * 70); // 0..69%
+          attempts++;
+        } while (usedTops.some(t => Math.abs(t - top) < 14) && attempts < 20);
+        usedTops.push(top);
+        f.style.top = top + '%';
 
-      fish.style.transition = `transform ${speed}ms ease-in-out`;
-      fish.style.transform = `translate(${x}px, ${y}px) ${flip}`;
+        // direction, duration, delay
+        const dir = Math.random() > 0.5 ? 'forward' : 'back';
+        const dur = 9000 + Math.random() * 9000; // 9-18s
+        const delay = Math.random() * 3000;
+        f.style.animation = `swim-${dir} ${dur}ms ease-in-out ${delay}ms infinite`;
+      });
+    })();
 
-      setTimeout(() => swimFish(fish, container), speed);
+    /* ------------------ Google Form submit handler ------------------ */
+    function handleSubmit(evt){
+      evt.preventDefault();
+      const form = evt.target;
+      const fd = new FormData(form);
+      // build hidden form (iframe submit) to avoid CORS
+      const hf = document.createElement('form');
+      hf.style.display='none';
+      hf.action = form.action;
+      hf.method = form.method || 'POST';
+      hf.target = 'hidden_iframe';
+      for(const [k,v] of fd.entries()){
+        const ip = document.createElement('input');
+        ip.type = 'hidden'; ip.name = k; ip.value = v;
+        hf.appendChild(ip);
+      }
+      document.body.appendChild(hf);
+      hf.submit();
+      document.body.removeChild(hf);
+
+      // show success
+      showSuccessModal();
+      form.reset();
+      return false;
     }
 
-    const fishZone = document.querySelector(".fish-zone");
-    swimFish(document.getElementById("fish1"), fishZone);
-    swimFish(document.getElementById("fish2"), fishZone);
-  </script>
+    /* ------------------ Success modal + confetti ------------------ */
+    function showSuccessModal(){
+      const modal = document.getElementById('successModal');
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
 
+      const conf = document.getElementById('confetti');
+      conf.innerHTML = '';
+      const colors = ['#ff6b8a','#ffd07a','#00c2d1','#7be495','#6ec6ff'];
+      for(let i=0;i<20;i++){
+        const s = document.createElement('span');
+        s.style.left = (Math.random()*100) + '%';
+        s.style.top = (Math.random()*10) + 'px';
+        s.style.background = colors[Math.floor(Math.random()*colors.length)];
+        s.style.width = (6 + Math.random()*8) + 'px';
+        s.style.height = (10 + Math.random()*12) + 'px';
+        s.style.position = 'absolute';
+        s.style.borderRadius = '2px';
+        s.style.animationDelay = (Math.random()*400) + 'ms';
+        s.style.opacity = 0;
+        conf.appendChild(s);
+        // small reveal
+        setTimeout(()=> s.style.opacity = 1, 20 + i*10);
+      }
+
+      setTimeout(closeModal, 6000);
+    }
+    function closeModal(){
+      const modal = document.getElementById('successModal');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      const conf = document.getElementById('confetti'); if(conf) conf.innerHTML = '';
+    }
+
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+    /* ------------------ Audio + Play button logic ------------------ */
+    (function(){
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('play-btn');
+
+      // ensure audio element exists; if not, hide button
+      if(!audio){
+        btn.style.display = 'none';
+        return;
+      }
+      // Start in paused state
+      btn.setAttribute('aria-pressed','false');
+      btn.textContent = '▶';
+
+      // Toggle play/pause on click
+      btn.addEventListener('click', async () => {
+        try {
+          if(audio.paused){
+            await audio.play(); // may require user interaction — ok
+            btn.setAttribute('aria-pressed','true');
+            btn.textContent = '⏸';
+            // change to accent when playing
+            btn.style.boxShadow = '0 10px 30px rgba(0,179,191,0.25)';
+          } else {
+            audio.pause();
+            btn.setAttribute('aria-pressed','false');
+            btn.textContent = '▶';
+            btn.style.boxShadow = '0 10px 30px rgba(0,0,0,0.25)';
+          }
+        } catch (err) {
+          // If play failed, keep button visible for retry
+          console.warn('Audio play failed:', err);
+        }
+      });
+
+      // If user interacts anywhere, try to resume autoplay if it was allowed (best-effort)
+      const resumeOnFirst = () => {
+        if(audio.paused) {
+          audio.play().then(()=> {
+            btn.setAttribute('aria-pressed','true');
+            btn.textContent = '⏸';
+          }).catch(()=>{/* ignore */});
+        }
+        document.removeEventListener('click', resumeOnFirst);
+      };
+      document.addEventListener('click', resumeOnFirst, {once:true});
+    })();
+  </script>
 </body>
 </html>
-
-
-
