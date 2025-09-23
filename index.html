@@ -213,26 +213,42 @@
   </div>
 
 
-<section class="rsvp">
+  <section class="rsvp">
   <h3>Қатысуыңызды растаңыз:</h3>
+  <form id="rsvpForm"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSdQ1q-iIZ0JQlUizemLDUPp445q3t3ZdjcKglORGLi-9Cz09w/formResponse"
+        method="POST"
+        target="hidden_iframe"
+        onsubmit="alert('Рақмет! Жауабыңыз қабылданды.'); this.reset();">
+      
+      <!-- Жаңа сұрақ -->
+      <label>
+        Атыңыз:<br>
+        <input type="text" name="entry.1321490033" required style="width: 300px; height: 35px; font-size: 16px; padding: 5px;">
+        </label><br><br>
 
-  <div style="
-      position: relative; 
-      width: 100%; 
-      max-width: 700px; 
-      margin: 0 auto; 
-      border-radius: 20px; 
-      overflow: hidden; 
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      background: rgba(0,0,0,0.6); /* dark overlay behind iframe */
-      padding: 10px;
-  ">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdQ1q-iIZ0JQlUizemLDUPp445q3t3ZdjcKglORGLi-9Cz09w/viewform?embedded=true"
-            width="100%" height="650" frameborder="0" marginheight="0" marginwidth="0">
-      Жүктелуде…
-    </iframe>
-  </div>
+
+      <label>
+        <input type="radio" name="entry.271098179" value="Өзім келемін" required> Өзім келемін
+      </label><br>
+      <label>
+        <input type="radio" name="entry.271098179" value="Жолдасыммен келемін"> Жолдасыммен келемін
+      </label><br>
+      <label>
+        <input type="radio" name="entry.271098179" value="Келе алмаймын"> Келе алмаймын
+      </label><br><br>
+      
+      <button type="submit">Жіберу</button>
+  </form>
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
 </section>
+
+
+    <script>
+    function submitted() {
+        alert("Рақмет! Жауабыңыз қабылданды.");
+    }
+    </script>
 
 
 
@@ -283,5 +299,6 @@
 
 </body>
 </html>
+
 
 
