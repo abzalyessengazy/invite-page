@@ -339,24 +339,25 @@
         <!-- little fish above form (staring) -->
         <div class="fish-above-form" aria-hidden="true"><img src="twinshug.gif" alt="fish staring"></div>
 
-        <!-- Google-form-like styled form (still posts to Google Forms) -->
-        <form id="rsvpForm"
-              action="https://docs.google.com/forms/d/e/1FAIpQLSdQ1q-iIZ0JQlUizemLDUPp445q3t3ZdjcKglORGLi-9Cz09w/formResponse"
-              method="POST" target="hidden_iframe" onsubmit="return handleSubmit(event);">
+<!-- Google-form-like styled form (still posts to Google Forms) -->
+<form id="rsvpForm"
+      action="https://docs.google.com/forms/d/e/1FAIpQLSdQ1q-iIZ0JQlUizemLDUPp445q3t3ZdjcKglORGLi-9Cz09w/formResponse"
+      method="POST" target="hidden_iframe">
 
-          <input type="text" name="entry.1321490033" placeholder="Атыңыз" required>
-          <input type="tel" name="entry.1987654321" placeholder="Телефон (міндетті емес)">
+  <input type="text" name="entry.1321490033" placeholder="Атыңыз" required>
+  <input type="tel" name="entry.1987654321" placeholder="Телефон (міндетті емес)">
 
-          <div class="radio-row" role="radiogroup" aria-label="Қатысу статусы">
-            <label><input type="radio" name="entry.271098179" value="Өзім келемін" required> Өзім келемін</label>
-            <label><input type="radio" name="entry.271098179" value="Жолдасыммен келемін"> Жолдасыммен келемін</label>
-            <label><input type="radio" name="entry.271098179" value="Келе алмаймын"> Келе алмаймын</label>
-          </div>
+  <div class="radio-row" role="radiogroup" aria-label="Қатысу статусы">
+    <label><input type="radio" name="entry.271098179" value="Өзім келемін" required> Өзім келемін</label>
+    <label><input type="radio" name="entry.271098179" value="Жолдасыммен келемін"> Жолдасыммен келемін</label>
+    <label><input type="radio" name="entry.271098179" value="Келе алмаймын"> Келе алмаймын</label>
+  </div>
 
-          <button type="submit">Жіберу</button>
-        </form>
+  <button type="submit">Жіберу</button>
+</form>
 
-        <iframe name="hidden_iframe" style="display:none;"></iframe>
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
 
         <!-- small audio control wrapper (hidden audio used; play via button) -->
         <div class="audio-wrap" style="display:none;">
@@ -557,6 +558,7 @@
 
 </body>
 </html>
+
 
 
 
