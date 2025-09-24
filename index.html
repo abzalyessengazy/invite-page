@@ -342,7 +342,10 @@
 <!-- Google-form-like styled form (still posts to Google Forms) -->
 <form id="rsvpForm"
       action="https://docs.google.com/forms/d/e/1FAIpQLSdQ1q-iIZ0JQlUizemLDUPp445q3t3ZdjcKglORGLi-9Cz09w/formResponse"
-      method="POST" target="hidden_iframe">
+      method="POST"
+      target="hidden_iframe"
+      onsubmit="handleSubmit(event)">
+
 
   <input type="text" name="entry.1321490033" placeholder="Атыңыз" required>
   <input type="tel" name="entry.1987654321" placeholder="Телефон (міндетті емес)">
@@ -558,6 +561,7 @@
 
 </body>
 </html>
+
 
 
 
