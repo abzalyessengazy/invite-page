@@ -165,6 +165,22 @@ h1 .subtitle {
   pointer-events: none; /* not clickable */
 }
 
+  
+.floating-text1 {
+  position: absolute;
+  font-size: 2rem;
+  font-family: 'Pacifico', cursive;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00d4ff, #0099ff, #ff66cc, #ffcc00);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 @keyframes floatAround {
   0%   { top: 20%; left: 10%; transform: rotate(0deg); }
   25%  { top: 40%; left: 70%; transform: rotate(5deg); }
@@ -303,7 +319,7 @@ h1 .subtitle {
       <div class="twins-gif" aria-hidden="true"><img src="twins.gif" alt="twins"></div>
       <h1>
   Ескендiр & Томирис <br>
-  <span class="subtitle"> <strong> 1  </strong>Жас & Тұсаукесер</span>
+  <span class="subtitle"> <strong> <u> 1 </u> </strong>Жас & Тұсаукесер</span>
 </h1>
 
       <h2 style="display:none">(optional subtitle)</h2>
@@ -323,7 +339,7 @@ h1 .subtitle {
     <div class="frame"></div>
 
     <!-- floating text -->
-    <div class="floating-text">Тойдың тақырыбы - мұхит әлемi</div>
+    <div class="floating-text">Тойдың тақырыбы </div>
     <div class="floating-text"> Мұхит әлемi</div>
     
 
@@ -708,6 +724,7 @@ h1 .subtitle {
   <!-- END OF LENGTH PAD -->
 </body>
 </html>
+
 
 
 
