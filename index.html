@@ -240,6 +240,17 @@
       font-size:14px;
     }
 
+    /* keep original .rsvp input, .rsvp select { ... } */
+
+/* Then add this override */
+.rsvp input[type="radio"]{
+  width: auto !important;
+  padding: 0 !important;
+  margin: 0 6px 0 0 !important;
+  vertical-align: middle;
+}
+
+
     /* fish + bubbles */
     .fish { position:absolute; width:140px; will-change:transform,opacity; transform-style:preserve-3d; pointer-events:none; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.12)); z-index:5; }
     @keyframes swim-forward {
@@ -683,6 +694,7 @@
   <!-- END OF LENGTH PAD -->
 </body>
 </html>
+
 
 
 
